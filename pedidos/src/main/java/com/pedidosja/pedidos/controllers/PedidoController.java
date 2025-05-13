@@ -1,5 +1,6 @@
 package com.pedidosja.pedidos.controllers;
 
+import com.pedidosja.pedidos.model.DTOs.PedidoDTO;
 import com.pedidosja.pedidos.model.entity.Pedido;
 import com.pedidosja.pedidos.services.PedidoService;
 import lombok.AllArgsConstructor;

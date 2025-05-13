@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@RequiredArgsConstructor
+import java.util.List;
+
+@Table(name = "tb_cliente")
 @Getter
 @Setter
-@Table(name = "tb_pedidos")
-public class Pedido {
+@RequiredArgsConstructor
+public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -18,5 +19,8 @@ public class Pedido {
     private String nome;
     private String email;
 
-
+    @ManyToMany
+    @JoinColumn(name = "tb_pedidos"
+    )
+    private List<Pedido> pedidos;
 }
