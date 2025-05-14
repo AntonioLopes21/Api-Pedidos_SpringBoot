@@ -5,17 +5,15 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @RequiredArgsConstructor
 @Getter
 @Setter
 @Table(name = "tb_pedido")
-public class Pedido {
+public class Produto {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String nome;
     private String descricao;

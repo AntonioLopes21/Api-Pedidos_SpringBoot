@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class ClienteResponseDTO {
-    private String id;
+    private Long id;
     private String nome;
     private String email;
 }

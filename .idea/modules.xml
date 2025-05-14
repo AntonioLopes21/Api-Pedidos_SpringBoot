@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/pedidos.iml" filepath="$PROJECT_DIR$/.idea/pedidos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Api-Pedidos_SpringBoot.iml" filepath="$PROJECT_DIR$/.idea/Api-Pedidos_SpringBoot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pedidos/pedidos.iml" filepath="$PROJECT_DIR$/pedidos/pedidos.iml" />
     </modules>
   </component>
 </project>
