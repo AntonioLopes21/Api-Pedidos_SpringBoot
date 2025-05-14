@@ -4,6 +4,7 @@ import com.pedidosja.pedidos.model.DTOs.ClienteDTO;
 import com.pedidosja.pedidos.model.entity.Cliente;
 import com.pedidosja.pedidos.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,18 +35,27 @@ public class ClienteService {
     }
 
     //PUT
-    public ResponseEntity<ClienteDTO> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO cliente) {
-        cliente.setNome(cliente.getNome());
-        cliente.setEmail(cliente.getEmail());
+    public ResponseEntity<ClienteDTO> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+        if(clienteRepository.existsById(id)) {
+            ClienteDTO novoCliente = new ClienteDTO();
+            novoCliente.setId(id);
+            novoCliente.setNome(dto.getNome());
+            novoCliente.setEmail(dto.getEmail());
 
-        return ResponseEntity.ok(cliente);
+            return ResponseEntity.ok(novoCliente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+
     }
 
     //DELETE
-    public void deletarCliente(@PathVariable Long id) {
+    public ResponseEntity.BodyBuilder deletarCliente(@PathVariable Long id) {
         if(clienteRepository.existsById(id)) {
             clienteRepository.deleteById(id);
         }
+        return ResponseEntity.ok();
     }
 
 
