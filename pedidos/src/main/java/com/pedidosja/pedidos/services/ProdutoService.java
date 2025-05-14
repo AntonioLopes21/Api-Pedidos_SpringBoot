@@ -3,6 +3,7 @@ package com.pedidosja.pedidos.services;
 import com.pedidosja.pedidos.model.DTOs.ProdutoDTO;
 import com.pedidosja.pedidos.model.entity.Produto;
 import com.pedidosja.pedidos.repository.ProdutoRepository;
+import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,27 +28,31 @@ public class ProdutoService {
 
     }
     //POST
-    public ResponseEntity<ProdutoDTO> criarPedido(@RequestBody ProdutoDTO produto){
-        Produto pedidoConvertido = ProdutoDTO.toEntity(produto);
+    public ResponseEntity<ProdutoDTO> criarPedido(@RequestBody ProdutoDTO dto){
+        Produto pedidoConvertido = ProdutoDTO.toEntity(dto);
         Produto pedidoSalvo = produtoRepository.save(pedidoConvertido);
 
         return ResponseEntity.ok(new ProdutoDTO(pedidoSalvo));
     }
 
     //PUT
-    public ResponseEntity<ProdutoDTO> editarPedido(@PathVariable String id, @RequestBody ProdutoDTO pedido) {
-        if(produtoRepository.existsById(id)) {
-            pedido.setNome(pedido.getNome());
-            pedido.setDescricao(pedido.getDescricao());
+    public ResponseEntity<ProdutoDTO> editarPedido(@PathVariable Long id, @RequestBody ProdutoDTO dto) {
 
-            return ResponseEntity.ok(pedido);
+        if(produtoRepository.existsById(id)) {
+            ProdutoDTO recebedor = new ProdutoDTO();
+
+            recebedor.setId(id);
+            recebedor.setNome(dto.getNome());
+            recebedor.setDescricao(dto.getDescricao());
+
+            return ResponseEntity.ok(recebedor);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     //DELETE
-    public ResponseEntity<Void> deletarPedido(@PathVariable String id) {
+    public ResponseEntity<Void> deletarPedido(@PathVariable Long id) {
         if(produtoRepository.existsById(id)) {
             produtoRepository.deleteById(id);
         }

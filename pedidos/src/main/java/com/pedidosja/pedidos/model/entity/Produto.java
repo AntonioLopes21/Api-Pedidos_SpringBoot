@@ -9,7 +9,7 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_pedido")
+@Table(name = "tb_produto")
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

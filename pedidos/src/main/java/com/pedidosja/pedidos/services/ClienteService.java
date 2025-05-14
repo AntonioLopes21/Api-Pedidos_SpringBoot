@@ -5,12 +5,14 @@ import com.pedidosja.pedidos.model.entity.Cliente;
 import com.pedidosja.pedidos.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 @RequiredArgsConstructor
+@Service
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
@@ -40,7 +42,7 @@ public class ClienteService {
     }
 
     //DELETE
-    public void deletarCliente(@PathVariable String id) {
+    public void deletarCliente(@PathVariable Long id) {
         if(clienteRepository.existsById(id)) {
             clienteRepository.deleteById(id);
         }

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_pedido_cliente")
+@Table(name = "tb_produto_cliente")
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ public class Compra {
     private Long id;
 
     @ManyToOne
-    private Produto pedido;
+    private Produto produto;
 
     @ManyToOne
     private Cliente cliente;
