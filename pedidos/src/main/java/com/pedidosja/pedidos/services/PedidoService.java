@@ -1,5 +1,7 @@
 package com.pedidosja.pedidos.services;
 
+import com.pedidosja.pedidos.model.DTOs.PedidoDTO;
+import com.pedidosja.pedidos.model.entity.Cliente;
 import com.pedidosja.pedidos.model.entity.Pedido;
 import com.pedidosja.pedidos.repository.PedidoRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,34 +18,11 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
 
     //método get - lógica
-    public ResponseEntity<List<Pedido>> listarPedido() {
-        return ResponseEntity.ok(pedidoRepository.findAll());
-    }
+    public ResponseEntity<PedidoDTO> getPedido(@RequestBody PedidoDTO pedido){
+        Pedido pedidoConvertido = PedidoDTO.toEntity(pedido);
+        Pedido pedidoSalvo = pedidoRepository.save(pedidoConvertido);
 
-    //POST
-    public ResponseEntity<Pedido> criarPedido (@RequestBody Pedido pedido) {
-        return ResponseEntity.ok(pedidoRepository.save(pedido));
-    }
-
-    //PUT -> edição
-    public ResponseEntity<Pedido> editarPedido(@PathVariable String id,@RequestBody Pedido pedido) {
-        if(pedidoRepository.existsById(id)) {
-            pedido.setNome(pedido.getNome());
-            pedido.setDescricao(pedido.getDescricao());
-
-            return ResponseEntity.ok(pedido);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    public ResponseEntity<Void> deletarPedido(String id) {
-        if(pedidoRepository.existsById(id)) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-
+        return ResponseEntity.ok(new PedidoDTO(pedidoSalvo));
     }
 
 }
