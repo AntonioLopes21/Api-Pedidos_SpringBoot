@@ -19,8 +19,4 @@ public class Cliente {
     private String nome;
     private String email;
 
-    @ManyToMany
-    @JoinColumn(name = "tb_pedidos"
-    )
-    private List<Pedido> pedidos;
 }

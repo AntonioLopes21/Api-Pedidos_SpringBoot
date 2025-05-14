@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class PedidoService {
     public ResponseEntity<Pedido> editarPedido(@PathVariable String id,@RequestBody Pedido pedido) {
         if(pedidoRepository.existsById(id)) {
             pedido.setNome(pedido.getNome());
-            pedido.setEmail(pedido.getEmail());
+            pedido.setDescricao(pedido.getDescricao());
 
             return ResponseEntity.ok(pedido);
         } else {

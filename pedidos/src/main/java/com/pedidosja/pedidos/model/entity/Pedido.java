@@ -5,18 +5,19 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @RequiredArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_pedidos")
+@Table(name = "tb_pedido")
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String nome;
-    private String email;
-
+    private String descricao;
 
 }
