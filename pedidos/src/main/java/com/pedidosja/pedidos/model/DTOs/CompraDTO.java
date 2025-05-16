@@ -14,4 +14,11 @@ public class CompraDTO {
     private Long id;
     private Long produtoId;
     private Long clienteId;
+
+    public static Compra toEntity (CompraDTO dto) {
+        Compra compra = new Compra();
+        compra.setId(dto.getId());
+
+        return compra;
+    }
 }

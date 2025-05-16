@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class ClienteDTO {
 
     private Long id;

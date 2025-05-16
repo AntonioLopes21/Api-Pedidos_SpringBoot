@@ -43,18 +43,19 @@ public class CompraService {
 
     //PUT
     public ResponseEntity<Compra> editarCompra(Compra compra, Long id) {
-        if(compraRepository.existsById(id)) {
 
-            compra.setId(id);
-            compra.setCliente(compra.getCliente());
-            compra.setProduto(compra.getProduto());
+            return compraRepository.findById(id).map(compraExistente -> {
+                compraExistente.setId(id);
+                compraExistente.setCliente(compra.getCliente());
+                compraExistente.setProduto(compra.getProduto());
+                compraRepository.save(compraExistente);
 
-            compraRepository.save(compra);
-            return ResponseEntity.ok(compra);
-        } else
-            return ResponseEntity.notFound().build();
+                return ResponseEntity.ok(compraExistente);
+            }).orElse(ResponseEntity.notFound().build());
+
     }
 
+    //DELETE
     public ResponseEntity<String> excluirCompra(Long id) {
         if(compraRepository.existsById(id)) {
             compraRepository.deleteById(id);
