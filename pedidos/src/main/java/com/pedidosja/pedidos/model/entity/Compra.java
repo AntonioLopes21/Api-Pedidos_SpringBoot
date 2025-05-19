@@ -17,10 +17,10 @@ public class Compra {
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
-    private Produto produto;
+    private Produto produtoId;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    private Cliente clienteId;
 
 }

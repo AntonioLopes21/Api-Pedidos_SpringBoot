@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -29,22 +30,17 @@ public class CompraService {
     }
 
     //POST
-    public Compra criarCompra(CompraDTO compraDTO) {
-        Produto produto = produtoRepository.findById(compraDTO.getProdutoId()).orElseThrow(() -> new RuntimeException("Produto não encontrado."));
+    public ResponseEntity<CompraDTO> criarCompra(@RequestBody CompraDTO compraDTO) {
+        Compra compra = CompraDTO.toEntity(compraDTO);
+        Compra dto = compraRepository.save(compra);
 
-        Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
-
-        Compra compra = new Compra();
-        compra.setCliente(cliente);
-        compra.setProduto(produto);
-
-        return compraRepository.save(compra);
+        return ResponseEntity.ok(new CompraDTO(dto));
     }
 
     //PUT
     public ResponseEntity<Compra> editarCompra(Compra compra, Long id) {
 
-            return compraRepository.findById(id).map(compraExistente -> {
+             compraRepository.findById(id).map(compraExistente -> {
                 compraExistente.setId(id);
                 compraExistente.setCliente(compra.getCliente());
                 compraExistente.setProduto(compra.getProduto());
@@ -52,6 +48,8 @@ public class CompraService {
 
                 return ResponseEntity.ok(compraExistente);
             }).orElse(ResponseEntity.notFound().build());
+
+             return ResponseEntity.status(HttpStatus.OK).body(compra);
 
     }
 

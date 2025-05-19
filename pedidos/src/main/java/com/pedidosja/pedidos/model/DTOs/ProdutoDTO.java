@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-
 @RequiredArgsConstructor
 @Getter
 @Setter
@@ -26,13 +25,5 @@ public class ProdutoDTO {
         pedido.setDescricao(pedidoDTO.getDescricao());
 
         return pedido;
-    }
-
-    public static PedidoResponseDTO toDTO(Produto pedido) {
-        PedidoResponseDTO pedidoDTO = new PedidoResponseDTO();
-        pedidoDTO.setNome(pedido.getNome());
-        pedidoDTO.setEmail(pedidoDTO.getEmail());
-
-        return pedidoDTO;
     }
 }
