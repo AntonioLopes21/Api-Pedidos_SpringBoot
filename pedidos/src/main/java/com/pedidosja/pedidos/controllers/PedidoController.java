@@ -18,22 +18,22 @@ public class PedidoController {
     private final PedidoService pedidoService;
 
     @GetMapping
-    public ResponseEntity<List<Pedido>> listarPedido() {
+    public ResponseEntity<List<PedidoDTO>> listarPedido() {
         return pedidoService.listarPedido();
     }
 
     @PostMapping
-    public ResponseEntity<Pedido> criarPedido(@RequestBody Pedido pedido) {
-        return pedidoService.criarPedido(pedido);
+    public ResponseEntity<PedidoDTO> criarPedido(@RequestBody PedidoDTO dto) {
+        return pedidoService.criarPedido(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pedido> editarPedido(@PathVariable String id, Pedido pedido) {
+    public ResponseEntity<PedidoDTO> editarPedido(@PathVariable Long id, PedidoDTO pedido) {
         return pedidoService.editarPedido(id, pedido);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarPedido(@PathVariable String id) {
+    public ResponseEntity<Void> deletarPedido(@PathVariable Long id) {
         return pedidoService.deletarPedido(id);
     }
 }

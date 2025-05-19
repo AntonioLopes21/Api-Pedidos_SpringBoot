@@ -10,10 +10,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PedidoDTO {
+    private Long id;
     private String nome;
     private String descricao;
 
     public PedidoDTO (Pedido pedido) {
+        this.id = pedido.getId();
         this.nome = pedido.getNome();
         this.descricao = pedido.getDescricao();
     }

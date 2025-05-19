@@ -1,6 +1,9 @@
 package com.pedidosja.pedidos.model.entity;
 
+import com.pedidosja.pedidos.model.DTOs.ClienteDTO;
+import com.pedidosja.pedidos.model.DTOs.PedidoDTO;
 import jakarta.persistence.*;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 @Table(name = "tb_pedido_cliente")
