@@ -8,6 +8,7 @@ import lombok.*;
 @RequiredArgsConstructor
 public class ClienteDTO {
 
+    private Long id;
     private String nome;
     private String email;
 

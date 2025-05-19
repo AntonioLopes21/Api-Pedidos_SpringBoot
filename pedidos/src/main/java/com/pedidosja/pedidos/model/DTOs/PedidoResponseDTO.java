@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PedidoResponseDTO {
-    private String id;
+    private Long id;
     private String nome;
     private String email;
 }

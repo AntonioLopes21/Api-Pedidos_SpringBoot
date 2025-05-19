@@ -12,11 +12,11 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@Entity
 public class Cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nome;
     private String email;
 
