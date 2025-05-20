@@ -12,15 +12,18 @@ import lombok.Setter;
 @RequiredArgsConstructor
 public class CompraDTO {
     private Long id;
-    private Produto produto;
-    private Cliente cliente;
+    private Long produtoId;
+    private Long clienteId;
 
     public static Compra toEntity (CompraDTO dto) {
         Compra compra = new Compra();
-
         compra.setId(dto.getId());
-        compra.setCliente(dto.getCliente());
-        compra.setProduto(dto.getProduto());
+
+        Produto produto = new Produto();
+        compra.setProduto(produto);
+
+        Cliente cliente = new Cliente();
+        compra.setCliente(cliente);
 
         return compra;
     }

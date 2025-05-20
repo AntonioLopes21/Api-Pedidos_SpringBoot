@@ -1,5 +1,6 @@
 package com.pedidosja.pedidos.services;
 
+import com.pedidosja.pedidos.exceptions.ResourceNotFoundException;
 import com.pedidosja.pedidos.model.DTOs.CompraDTO;
 import com.pedidosja.pedidos.model.entity.Cliente;
 import com.pedidosja.pedidos.model.entity.Compra;
@@ -30,26 +31,33 @@ public class CompraService {
     }
 
     //POST
-    public ResponseEntity<Compra> criarCompra(CompraDTO compraDTO) {
-        Compra compraConvertida = CompraDTO.toEntity(compraDTO);
+    public ResponseEntity<Compra> criarCompra(CompraDTO dto) {
+        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        Produto produto = produtoRepository.findById(dto.getProdutoId())
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
+        Compra compraConvertida = CompraDTO.toEntity(dto);
+
+        compraConvertida.setCliente(cliente);
+        compraConvertida.setProduto(produto);
         return ResponseEntity.ok(compraRepository.save(compraConvertida));
     }
 
     //PUT
     public ResponseEntity<Compra> editarCompra(CompraDTO dto, Long id) {
-            Compra convertida = CompraDTO.toEntity(dto);
+        Compra compraExistente = compraRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Compra não encontrada"));
 
-            if(compraRepository.existsById(id)) {
-                convertida.setId(id);
-                convertida.setProduto(dto.getProduto());
-                convertida.setCliente(dto.getCliente());
-                compraRepository.save(convertida);
+        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado"));
+        Produto produto = produtoRepository.findById(dto.getProdutoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado"));
 
-                return ResponseEntity.status(HttpStatus.OK).body(convertida);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+        compraExistente.setCliente(cliente);
+        compraExistente.setProduto(produto);
+
+        return ResponseEntity.ok(compraRepository.save(compraExistente));
     }
 
     //DELETE
