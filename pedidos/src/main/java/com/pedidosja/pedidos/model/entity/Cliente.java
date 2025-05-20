@@ -7,11 +7,11 @@ import lombok.Setter;
 
 import java.util.List;
 
+@Entity
 @Table(name = "tb_cliente")
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

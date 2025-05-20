@@ -19,43 +19,40 @@ public class ClienteService {
     private final ClienteRepository clienteRepository;
 
     //GET
-    public ResponseEntity<List<ClienteDTO>> listarCliente() {
-        List<Cliente> cliente = clienteRepository.findAll();
-        List<ClienteDTO> dto = cliente.stream()
-                .map(ClienteDTO :: new).toList();
+    public ResponseEntity<List<Cliente>> listarCliente() {
 
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteRepository.findAll());
     }
 
     //POST
-    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO dto) {
-        Cliente clienteConversao = ClienteDTO.toEntity(dto);
-        Cliente salvo = clienteRepository.save(clienteConversao);
-        return ResponseEntity.ok(new ClienteDTO(salvo));
+    public ResponseEntity<Cliente> criarCliente(@RequestBody ClienteDTO dto) {
+        Cliente novoConvertido = ClienteDTO.toEntity(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteRepository.save(novoConvertido));
     }
 
-    //PUT
-    public ResponseEntity<ClienteDTO> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO dto) {
-        if(clienteRepository.existsById(id)) {
-            ClienteDTO novoCliente = new ClienteDTO();
-            novoCliente.setId(id);
-            novoCliente.setNome(dto.getNome());
-            novoCliente.setEmail(dto.getEmail());
+        //PUT
+        public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+            if(clienteRepository.existsById(id)) {
+                Cliente novoCliente = ClienteDTO.toEntity(dto);
+                novoCliente.setId(id);
+                clienteRepository.save(novoCliente);
+                return ResponseEntity.ok(novoCliente);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        }
 
-            return ResponseEntity.ok(novoCliente);
+    //DELETE
+    public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
+        if(clienteRepository.existsById(id)) {
+            clienteRepository.deleteById(id);
+
+            return ResponseEntity.ok().build();
+
         } else {
             return ResponseEntity.notFound().build();
         }
-
-
-    }
-
-    //DELETE
-    public ResponseEntity.BodyBuilder deletarCliente(@PathVariable Long id) {
-        if(clienteRepository.existsById(id)) {
-            clienteRepository.deleteById(id);
-        }
-        return ResponseEntity.ok();
     }
 
 

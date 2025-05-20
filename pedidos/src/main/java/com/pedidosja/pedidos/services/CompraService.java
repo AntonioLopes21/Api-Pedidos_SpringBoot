@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -29,40 +30,36 @@ public class CompraService {
     }
 
     //POST
-    public Compra criarCompra(CompraDTO compraDTO) {
-        Produto produto = produtoRepository.findById(compraDTO.getProdutoId()).orElseThrow(() -> new RuntimeException("Produto não encontrado."));
+    public ResponseEntity<Compra> criarCompra(CompraDTO compraDTO) {
+        Compra compraConvertida = CompraDTO.toEntity(compraDTO);
 
-        Cliente cliente = clienteRepository.findById(compraDTO.getClienteId()).orElseThrow(() -> new RuntimeException("Cliente não encontrado."));
-
-        Compra compra = new Compra();
-        compra.setCliente(cliente);
-        compra.setProduto(produto);
-
-        return compraRepository.save(compra);
+        return ResponseEntity.ok(compraRepository.save(compraConvertida));
     }
 
     //PUT
-    public ResponseEntity<Compra> editarCompra(Compra compra, Long id) {
+    public ResponseEntity<Compra> editarCompra(CompraDTO dto, Long id) {
+            Compra convertida = CompraDTO.toEntity(dto);
 
-            return compraRepository.findById(id).map(compraExistente -> {
-                compraExistente.setId(id);
-                compraExistente.setCliente(compra.getCliente());
-                compraExistente.setProduto(compra.getProduto());
-                compraRepository.save(compraExistente);
+            if(compraRepository.existsById(id)) {
+                convertida.setId(id);
+                convertida.setProduto(dto.getProduto());
+                convertida.setCliente(dto.getCliente());
+                compraRepository.save(convertida);
 
-                return ResponseEntity.ok(compraExistente);
-            }).orElse(ResponseEntity.notFound().build());
-
+                return ResponseEntity.status(HttpStatus.OK).body(convertida);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
     }
 
     //DELETE
-    public ResponseEntity<String> excluirCompra(Long id) {
+    public ResponseEntity<Void> excluirCompra(Long id) {
         if(compraRepository.existsById(id)) {
             compraRepository.deleteById(id);
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Compra com id:" + id + " deletada com sucesso!");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Compra com id:" + id + " não encontrada.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 }
