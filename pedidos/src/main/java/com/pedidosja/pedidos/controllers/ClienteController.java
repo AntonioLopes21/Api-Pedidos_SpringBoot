@@ -22,7 +22,6 @@ public class ClienteController {
     //GET
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> listarCliente() {
-
         return clienteService.listarCliente();
     }
 
@@ -38,7 +37,6 @@ public class ClienteController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
-        clienteService.deletarCliente(id);
-        return ResponseEntity.ok().build();
+        return clienteService.deletarCliente(id);
     }
  }

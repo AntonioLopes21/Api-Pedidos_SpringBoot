@@ -25,11 +25,4 @@ public class ClienteDTO {
         return cliente;
     }
 
-    public static ClienteResponseDTO toDTO (Cliente cliente) {
-        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
-        clienteResponseDTO.setNome(cliente.getNome());
-        clienteResponseDTO.setEmail(cliente.getEmail());
-
-        return clienteResponseDTO;
-    }
 }

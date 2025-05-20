@@ -1,7 +1,6 @@
 package com.pedidosja.pedidos.services;
 
 import com.pedidosja.pedidos.model.DTOs.ClienteDTO;
-import com.pedidosja.pedidos.model.entity.Cliente;
 import com.pedidosja.pedidos.repository.ClienteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,18 +19,12 @@ public class ClienteService {
 
     //GET
     public ResponseEntity<List<ClienteDTO>> listarCliente() {
-        List<Cliente> cliente = clienteRepository.findAll();
-        List<ClienteDTO> dto = cliente.stream()
-                .map(ClienteDTO :: new).toList();
-
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(clienteRepository.findAll());
     }
 
     //POST
     public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO dto) {
-        Cliente clienteConversao = ClienteDTO.toEntity(dto);
-        Cliente salvo = clienteRepository.save(clienteConversao);
-        return ResponseEntity.ok(new ClienteDTO(salvo));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteRepository.save(dto));
     }
 
     //PUT
@@ -51,11 +44,11 @@ public class ClienteService {
     }
 
     //DELETE
-    public ResponseEntity.BodyBuilder deletarCliente(@PathVariable Long id) {
+    public ResponseEntity<Void> deletarCliente(@PathVariable Long id) {
         if(clienteRepository.existsById(id)) {
             clienteRepository.deleteById(id);
         }
-        return ResponseEntity.ok();
+        return ResponseEntity.ok().build();
     }
 
 

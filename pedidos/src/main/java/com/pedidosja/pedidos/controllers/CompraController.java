@@ -18,33 +18,25 @@ import java.util.List;
 public class CompraController {
 
     private final CompraService compraService;
-    private final CompraRepository compraRepository;
 
     @GetMapping
-    public ResponseEntity<List<Compra>> listarCompras() {
+    public ResponseEntity<List<CompraDTO>> listarCompras() {
         return ResponseEntity.ok(compraService.listarCompras());
     }
 
     @PostMapping
-    public ResponseEntity<Compra> criarCompra(@RequestBody CompraDTO dto) {
-        return ResponseEntity.ok(compraService.criarCompra(dto));
+    public ResponseEntity<CompraDTO> criarCompra(@RequestBody CompraDTO dto) {
+        return compraService.criarCompra(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Compra> editarCompra(@PathVariable Long id,@RequestBody Compra compra) {
-        if(compraRepository.existsById(id)) {
-            return compraService.editarCompra(compra, id);
-        } else
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<CompraDTO> editarCompra(@PathVariable Long id,@RequestBody CompraDTO compra) {
+        return compraService.editarCompra(compra, id);
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirCompra(@PathVariable Long id) {
-        if(compraRepository.existsById(id)) {
-             compraService.excluirCompra(id);
-             return ResponseEntity.status(HttpStatus.ACCEPTED).body("Compra deletada com sucesso!");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> excluirCompra(@PathVariable Long id) {
+        return compraService.excluirCompra(id);
     }
 }

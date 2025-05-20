@@ -5,6 +5,7 @@ import com.pedidosja.pedidos.model.entity.Produto;
 import com.pedidosja.pedidos.repository.ProdutoRepository;
 import jakarta.persistence.Table;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,20 +20,11 @@ public class ProdutoService {
 
     //GET
     public ResponseEntity<List<ProdutoDTO>> listarPedido() {
-        List<Produto> produto = produtoRepository.findAll();
-        List<ProdutoDTO> dto = produto.stream()
-                .map(ProdutoDTO:: new)
-                .toList();
-
-        return ResponseEntity.ok(dto);
-
+        return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.findAll());
     }
     //POST
     public ResponseEntity<ProdutoDTO> criarPedido(@RequestBody ProdutoDTO dto){
-        Produto pedidoConvertido = ProdutoDTO.toEntity(dto);
-        Produto pedidoSalvo = produtoRepository.save(pedidoConvertido);
-
-        return ResponseEntity.ok(new ProdutoDTO(pedidoSalvo));
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(dto));
     }
 
     //PUT

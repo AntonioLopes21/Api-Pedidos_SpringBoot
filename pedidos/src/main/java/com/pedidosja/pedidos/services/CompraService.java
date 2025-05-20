@@ -25,20 +25,17 @@ public class CompraService {
     private final ProdutoRepository produtoRepository;
 
     //GET
-    public List<Compra> listarCompras() {
+    public List<CompraDTO> listarCompras() {
         return compraRepository.findAll();
     }
 
     //POST
-    public ResponseEntity<CompraDTO> criarCompra(@RequestBody CompraDTO compraDTO) {
-        Compra compra = CompraDTO.toEntity(compraDTO);
-        Compra dto = compraRepository.save(compra);
-
-        return ResponseEntity.ok(new CompraDTO(dto));
+    public ResponseEntity<CompraDTO> criarCompra(CompraDTO compraDTO) {
+        return ResponseEntity.ok(compraRepository.save(compraDTO));
     }
 
     //PUT
-    public ResponseEntity<Compra> editarCompra(Compra compra, Long id) {
+    public ResponseEntity<CompraDTO> editarCompra(CompraDTO compra, Long id) {
 
              compraRepository.findById(id).map(compraExistente -> {
                 compraExistente.setId(id);
@@ -54,13 +51,13 @@ public class CompraService {
     }
 
     //DELETE
-    public ResponseEntity<String> excluirCompra(Long id) {
+    public ResponseEntity<Void> excluirCompra(Long id) {
         if(compraRepository.existsById(id)) {
             compraRepository.deleteById(id);
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Compra com id:" + id + " deletada com sucesso!");
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         } else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Compra com id:" + id + " não encontrada.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 }

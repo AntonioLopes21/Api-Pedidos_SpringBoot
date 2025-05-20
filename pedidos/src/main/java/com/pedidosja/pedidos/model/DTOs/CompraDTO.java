@@ -17,7 +17,10 @@ public class CompraDTO {
 
     public static Compra toEntity (CompraDTO dto) {
         Compra compra = new Compra();
+
         compra.setId(dto.getId());
+        compra.setCliente(dto.getCliente());
+        compra.setProduto(dto.getProduto());
 
         return compra;
     }

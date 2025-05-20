@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
