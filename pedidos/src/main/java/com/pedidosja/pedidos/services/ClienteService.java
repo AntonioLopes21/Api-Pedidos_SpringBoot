@@ -32,10 +32,13 @@ public class ClienteService {
     }
 
         //PUT
-        public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+        public ResponseEntity<Cliente> editarCliente(Long id, ClienteDTO dto) {
             if(clienteRepository.existsById(id)) {
                 Cliente novoCliente = ClienteDTO.toEntity(dto);
+
                 novoCliente.setId(id);
+                novoCliente.setNome(dto.getNome());
+                novoCliente.setEmail(dto.getEmail());
                 clienteRepository.save(novoCliente);
                 return ResponseEntity.ok(novoCliente);
             } else {
