@@ -20,17 +20,17 @@ public class CompraController {
     private final CompraService compraService;
 
     @GetMapping
-    public ResponseEntity<List<CompraDTO>> listarCompras() {
+    public ResponseEntity<List<Compra>> listarCompras() {
         return ResponseEntity.ok(compraService.listarCompras());
     }
 
     @PostMapping
-    public ResponseEntity<CompraDTO> criarCompra(@RequestBody CompraDTO dto) {
+    public ResponseEntity<Compra> criarCompra(@RequestBody CompraDTO dto) {
         return compraService.criarCompra(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CompraDTO> editarCompra(@PathVariable Long id,@RequestBody CompraDTO compra) {
+    public ResponseEntity<Compra> editarCompra(@PathVariable Long id,@RequestBody CompraDTO compra) {
         return compraService.editarCompra(compra, id);
     }
 

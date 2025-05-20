@@ -21,17 +21,17 @@ public class ClienteController {
 
     //GET
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> listarCliente() {
+    public ResponseEntity<List<Cliente>> listarCliente() {
         return clienteService.listarCliente();
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> criarCliente(@RequestBody ClienteDTO dto) {
+    public ResponseEntity<Cliente> criarCliente(@RequestBody ClienteDTO dto) {
         return clienteService.criarCliente(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteDTO> editarCliente(@PathVariable Long id, ClienteDTO dto) {
+    public ResponseEntity<Cliente> editarCliente(@PathVariable Long id, ClienteDTO dto) {
         return clienteService.editarCliente(id, dto);
     }
 

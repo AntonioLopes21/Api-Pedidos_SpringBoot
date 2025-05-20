@@ -25,29 +25,31 @@ public class CompraService {
     private final ProdutoRepository produtoRepository;
 
     //GET
-    public List<CompraDTO> listarCompras() {
+    public List<Compra> listarCompras() {
         return compraRepository.findAll();
     }
 
     //POST
-    public ResponseEntity<CompraDTO> criarCompra(CompraDTO compraDTO) {
-        return ResponseEntity.ok(compraRepository.save(compraDTO));
+    public ResponseEntity<Compra> criarCompra(CompraDTO compraDTO) {
+        Compra compraConvertida = CompraDTO.toEntity(compraDTO);
+
+        return ResponseEntity.ok(compraRepository.save(compraConvertida));
     }
 
     //PUT
-    public ResponseEntity<CompraDTO> editarCompra(CompraDTO compra, Long id) {
+    public ResponseEntity<Compra> editarCompra(CompraDTO dto, Long id) {
+            Compra convertida = CompraDTO.toEntity(dto);
 
-             compraRepository.findById(id).map(compraExistente -> {
-                compraExistente.setId(id);
-                compraExistente.setCliente(compra.getCliente());
-                compraExistente.setProduto(compra.getProduto());
-                compraRepository.save(compraExistente);
+            if(compraRepository.existsById(id)) {
+                convertida.setId(id);
+                convertida.setProduto(dto.getProduto());
+                convertida.setCliente(dto.getCliente());
+                compraRepository.save(convertida);
 
-                return ResponseEntity.ok(compraExistente);
-            }).orElse(ResponseEntity.notFound().build());
-
-             return ResponseEntity.status(HttpStatus.OK).body(compra);
-
+                return ResponseEntity.status(HttpStatus.OK).body(convertida);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
     }
 
     //DELETE
