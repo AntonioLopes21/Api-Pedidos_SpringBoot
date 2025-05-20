@@ -17,9 +17,11 @@ public class Compra {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "produto_id", nullable = false)
     private Produto produto;
 
     @ManyToOne
+    @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
 }
