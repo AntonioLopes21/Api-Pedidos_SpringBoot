@@ -14,16 +14,21 @@ public class CompraDTO {
     private Long id;
     private Long produtoId;
     private Long clienteId;
+    private int quantidade;
 
     public static Compra toEntity (CompraDTO dto) {
         Compra compra = new Compra();
         compra.setId(dto.getId());
 
         Produto produto = new Produto();
+        produto.setId(dto.getProdutoId());
         compra.setProduto(produto);
 
         Cliente cliente = new Cliente();
+        cliente.setId(dto.getClienteId());
         compra.setCliente(cliente);
+
+        compra.setQuantidade(dto.getQuantidade());
 
         return compra;
     }

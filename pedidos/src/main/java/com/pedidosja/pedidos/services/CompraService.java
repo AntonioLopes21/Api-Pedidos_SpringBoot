@@ -25,6 +25,10 @@ public class CompraService {
 
     private final ProdutoRepository produtoRepository;
 
+    public double calcularValorCompra(Produto produto, Compra compra) {
+        return produto.getPreco() * compra.getQuantidade();
+    }
+
     //GET
     public List<Compra> listarCompras() {
         return compraRepository.findAll();
@@ -38,9 +42,14 @@ public class CompraService {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
         Compra compraConvertida = CompraDTO.toEntity(dto);
-
         compraConvertida.setCliente(cliente);
         compraConvertida.setProduto(produto);
+
+        compraConvertida.setQuantidade(dto.getQuantidade());
+
+        compraConvertida.setValorTotalCompra(calcularValorCompra(produto, compraConvertida));
+
+
         return ResponseEntity.ok(compraRepository.save(compraConvertida));
     }
 
@@ -56,6 +65,9 @@ public class CompraService {
 
         compraExistente.setCliente(cliente);
         compraExistente.setProduto(produto);
+
+        compraExistente.setQuantidade(dto.getQuantidade());
+        compraExistente.setValorTotalCompra(calcularValorCompra(produto, compraExistente));
 
         return ResponseEntity.ok(compraRepository.save(compraExistente));
     }
