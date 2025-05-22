@@ -40,7 +40,6 @@ public class ProdutoService {
             convertido.setNome(dto.getNome());
             convertido.setDescricao(dto.getDescricao());
             convertido.setPreco(dto.getPreco());
-            convertido.setQuantidade(dto.getQuantidade());
             produtoRepository.save(convertido);
 
             return ResponseEntity.ok(convertido);

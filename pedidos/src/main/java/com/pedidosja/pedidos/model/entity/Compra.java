@@ -24,4 +24,8 @@ public class Compra {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
+    private int quantidade;
+    private double valorTotalCompra;
+
+
 }
